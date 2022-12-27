@@ -31,9 +31,3 @@ score to go into and player lives. However, this alone used way to many logic el
 
 We had also planned to include a boss fight with multiple stages. This had to be cut due to the same problem with top header as it simply used too much memory
 and subsequently used too many logic elements. The templates for both the boss fight and top file are in the Cut Additions folder.
-
-
-
-To Tyler:
-Hey homie, I hope your havin fun grading all these projects. Hope you had a good thanksgiving since after all you are the QUARTUS GOD. 
-We've been grinding on this project for the past 3 weeks, we're just now finalizing our submission. We hope you enjoy G :)
