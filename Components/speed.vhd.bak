@@ -1,0 +1,253 @@
+library ieee;
+use ieee.std_logic_1164.all;
+use ieee.numeric_std.all;
+
+entity counter is
+	port (
+			clock : in std_logic; --16.777Mhz
+			maxclk : in std_logic;
+			
+			GSENSOR_CS_N : OUT	STD_LOGIC;
+			GSENSOR_SCLK : OUT	STD_LOGIC;
+			GSENSOR_SDI  : INOUT	STD_LOGIC;
+			GSENSOR_SDO  : INOUT	STD_LOGIC;
+			
+			mrest: in std_logic;
+			--Test Clock Fast
+			--tclkF: out std_logic;
+			countOutR : out std_logic_vector(3 downto 0);
+			countOutG : out std_logic_vector(3 downto 0)
+			
+			
+			);
+end counter;
+
+architecture behavioral of counter is
+signal data_x      : STD_LOGIC_VECTOR(15 downto 0);
+signal data_y      : STD_LOGIC_VECTOR(15 downto 0);
+signal data_z      : STD_LOGIC_VECTOR(15 downto 0);
+
+
+signal slow : std_logic_vector(23 downto 0) := "100100000000000000000000"; --"100100000000000000000000"
+signal restS : std_logic := '1';
+signal countS : std_logic_vector(23 downto 0);
+signal clockS : std_logic := '0';
+signal medium : std_logic_vector(23 downto 0) := "001100000000000000000000";
+signal restM : std_logic := '1';
+signal countM : std_logic_vector(23 downto 0);
+signal clockM : std_logic := '0';
+signal fast : std_logic_vector(23 downto 0)   := "000100000000000000000000"; --"000000100000000000000000"
+signal restF : std_logic := '1';
+signal countF : std_logic_vector(23 downto 0);
+signal clockF : std_logic := '0';
+
+signal mainCountR : std_logic_vector(3 downto 0);
+signal mainCountG : std_logic_vector(3 downto 0);
+signal directionR : std_logic := '0';
+signal directionG : std_logic := '0';
+signal mclockR : std_logic := '0';
+signal mclockG : std_logic := '0';
+signal menableR : std_logic := '1';
+signal menableG : std_logic := '1';
+
+signal dataX : unsigned(7 downto 0);
+signal dataY : unsigned(7 downto 0);
+
+
+component ADXL345_controller is port(
+	
+		reset_n     : IN STD_LOGIC;
+		clk         : IN STD_LOGIC;
+		data_valid  : OUT STD_LOGIC;
+		data_x      : OUT STD_LOGIC_VECTOR(15 downto 0);
+		data_y      : OUT STD_LOGIC_VECTOR(15 downto 0);
+		data_z      : OUT STD_LOGIC_VECTOR(15 downto 0);
+		SPI_SDI     : OUT STD_LOGIC;
+		SPI_SDO     : IN STD_LOGIC;
+		SPI_CSN     : OUT STD_LOGIC;
+		SPI_CLK     : OUT STD_LOGIC
+		
+    );
+end component;
+
+component cnt_bindir is
+	generic( n : natural := 8 );
+  port (
+    dout                 : out std_logic_vector(n-1 downto 0);
+    dir                  : in  std_logic;
+    clk  : in  std_logic;
+    arst : in std_logic;
+	 srst : in std_logic;
+	 en : in std_logic
+	 );
+end component;
+
+begin
+
+CNTS: cnt_bindir
+	generic map (n => 24)
+	port map (
+				dout => countS,
+				dir => '0',
+				clk => clock,
+				arst => '0',
+				srst => restS,
+				en => '1');
+				
+CNTM: cnt_bindir
+	generic map (n => 24)
+	port map (
+				dout => countM,
+				dir => '0',
+				clk => clock,
+				arst => '0',
+				srst => restM,
+				en => '1');
+				
+CNTF: cnt_bindir 
+	generic map (n => 24)
+	port map (
+				dout => countF,
+				dir => '0',
+				clk => clock,
+				arst => '0',
+				srst => restF,
+				en => '1');
+				
+RCNT: cnt_bindir
+	generic map (n => 4 )
+	port map (
+				dout => mainCountR,
+				dir => directionR,
+				clk => mclockR,
+				arst => '0',
+				srst => not mrest,
+				en => menableR);
+				
+GCNT: cnt_bindir
+	generic map (n => 4 )
+	port map (
+				dout => mainCountG,
+				dir => directionG,
+				clk => mclockG,
+				arst => '0',
+				srst => not mrest,
+				en => menableG);
+				
+				
+				
+
+
+GENCLK: process(clock)
+begin
+	if (rising_edge(clock)) then
+		if (countS = slow) then
+			restS <= '1';
+			clockS <= not clockS;
+		end if;
+		if (restS = '1') then
+			restS <= '0';
+		end if;
+		
+		if (countM = medium) then
+			restM <= '1';
+			clockM <= not clockM;
+		end if;
+		if (restM = '1') then
+			restM <= '0';
+		end if;
+		
+		if (countF = fast) then
+			restF <= '1';
+			clockF <= not clockF;
+		end if;
+		if (restF = '1') then
+			restF <= '0';
+		end if;
+	end if;
+end process;
+
+
+U0 : ADXL345_controller port map('1', maxclk, open, data_x, data_y, data_z, GSENSOR_SDI, GSENSOR_SDO, GSENSOR_CS_N, GSENSOR_SCLK);
+dataX <= unsigned(data_x(11 downto 4));
+dataY <= unsigned(data_y(11 downto 4));
+
+DIR: process(clock)	
+begin
+	if (rising_edge(clock)) then
+		if (mrest = '0') then
+			mclockR <= clockF;
+			mclockG <= clockF;
+		end if;
+	--If Flat X-Axis
+		if ((to_integer(dataX) = 255) or (to_integer(dataX) = 0)) then
+			menableR <= '0';
+			--If Tilt Left Stepping
+		elsif ((to_integer(dataX) >= 1) and (to_integer(dataX) <= 4)) then
+			menableR <= '1';
+			directionR <= '1';
+			mclockR <= clockS;
+		elsif ((to_integer(dataX) >= 5) and (to_integer(dataX) <= 9 )) then
+			menableR <= '1';
+			directionR <= '1';
+			mclockR <= clockM;
+		elsif ((to_integer(dataX) >= 10) and (to_integer(dataX) <= 15)) then
+			menableR <= '1';
+			directionR <= '1';
+			mclockR <= clockF;
+		--If Tilt Right Stepping
+		elsif ((to_integer(dataX) >= 251) and (to_integer(dataX) <= 254)) then
+			menableR <= '1';
+			directionR <= '0';
+			mclockR <= clockS;
+		elsif ((to_integer(dataX) >= 245) and (to_integer(dataX) <= 250)) then
+			menableR <= '1';
+			directionR <= '0';
+			mclockR <= clockM;
+		elsif ((to_integer(dataX) >= 240 ) and (to_integer(dataX) <= 244 )) then
+			menableR <= '1';
+			directionR <= '0';
+			mclockR <= clockF;
+		end if;
+	--If Flat Y-Axis
+		if ((to_integer(dataY) = 255) or (to_integer(dataY) = 0)) then
+			menableG <= '0';
+			--If Tilt Left Stepping
+		elsif ((to_integer(dataY) >= 1) and (to_integer(dataY) <= 4)) then
+			menableG <= '1';
+			directionG <= '1';
+			mclockG <= clockS;
+		elsif ((to_integer(dataY) >= 5) and (to_integer(dataY) <= 9 )) then
+			menableG <= '1';
+			directionG <= '1';
+			mclockG <= clockM;
+		elsif ((to_integer(dataY) >= 10) and (to_integer(dataY) <= 15)) then
+			menableG <= '1';
+			directionG <= '1';
+			mclockG <= clockF;
+		--If Tilt Right Stepping
+		elsif ((to_integer(dataY) >= 251) and (to_integer(dataY) <= 254)) then
+			menableG <= '1';
+			directionG <= '0';
+			mclockG <= clockS;
+		elsif ((to_integer(dataY) >= 245) and (to_integer(dataY) <= 250)) then
+			menableG <= '1';
+			directionG <= '0';
+			mclockG <= clockM;
+		elsif ((to_integer(dataY) >= 240 ) and (to_integer(dataY) <= 244 )) then
+			menableG <= '1';
+			directionG <= '0';
+			mclockG <= clockF;
+		end if;
+	end if;
+end process;
+
+countOutR <= mainCountR;
+countOutG <= mainCountG;
+
+end behavioral;
+
+
+
+
+

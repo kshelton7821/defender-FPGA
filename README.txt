@@ -1,0 +1,39 @@
+Contains all of base game requirments
+
+Bonuses Completed
+B0: Memory file already initialized so no writing, but in order to render it reads the pixel data from the appropriate offset. Does not read sequentially over-all, but
+ does read sequentially for the appropriate image being draw. Can hop around depending on the need of the current pixel.
+B1: No background terrain, however, we do have a HUD at the top of the screen to emulate being in the cockpit.
+B2: Not Done
+B3: Not Done
+B4: Explosion graphics are implemented, ran out of room in logic elements for sound.
+B5: Not Done
+B9: Game is in a generic form currently. It uses the images in the images folder and running the convert_all_mif script to output a memory file that contrains all the images in
+a 1D array style fashion and you can change all of them, but you would have to change the offsets used in the main game for it to render correctly. Then you would use
+convert_transparency to create a transparency layer for the aliens being used. 
+
+Images:
+Images used were an omage to different video games over time, however, we did modify all images used to be slightly unique.
+
+Script Usage:
+In order to use the scipts you must have python installed along with the PIL library. For convert_all_mif you simply put all the images you want to use in that folder
+then pull up the command prompt and go to the directory it is in. Then you type "python convert_all_mif.py ./images". That will output the init.mif file used for initializing
+the memory. If you use images bigger than the ones used you will have to modify the address width in ram_infer and modify the depth in the convert_all_mif script. The game
+has a transparency system and in order for the aliens to render correctly you have to run each image through convert_transparency. The syntax of usage is to open a command
+window and set the directory to the current one. You then use the syntax "python convert_transparency.py x.png" with x being the name of your file. This will return an
+out.txt file that contains the std_logic_vector used as a mask for transparency. You would then update the equivalent transparency vector in the data_etc file.
+
+
+Design Restrictions Ran Into:
+
+We initially had a giant top header that went across the screen that was modeled after the Boeing 747 Autopilot Control panel along with mini screens for the
+score to go into and player lives. However, this alone used way to many logic elements and we had to go with the current version shrunk by 2/3 in the middle with 2 emulated screens on each side.
+
+We had also planned to include a boss fight with multiple stages. This had to be cut due to the same problem with top header as it simply used too much memory
+and subsequently used too many logic elements. The templates for both the boss fight and top file are in the Cut Additions folder.
+
+
+
+To Tyler:
+Hey homie, I hope your havin fun grading all these projects. Hope you had a good thanksgiving since after all you are the QUARTUS GOD. 
+We've been grinding on this project for the past 3 weeks, we're just now finalizing our submission. We hope you enjoy G :)

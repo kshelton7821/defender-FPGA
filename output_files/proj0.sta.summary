@@ -1,0 +1,221 @@
+------------------------------------------------------------
+Timing Analyzer Summary
+------------------------------------------------------------
+
+Type  : Slow 1200mV 85C Model Setup 'vga_controller:U2|column[0]'
+Slack : -32.219
+TNS   : -438.045
+
+Type  : Slow 1200mV 85C Model Setup 'hw_image_generator:U3|game_clk'
+Slack : -10.197
+TNS   : -5190.030
+
+Type  : Slow 1200mV 85C Model Setup 'U1|altpll_component|auto_generated|pll1|clk[0]'
+Slack : -8.856
+TNS   : -199.806
+
+Type  : Slow 1200mV 85C Model Setup 'clkin'
+Slack : -1.677
+TNS   : -24.340
+
+Type  : Slow 1200mV 85C Model Setup 'alienclock'
+Slack : -0.493
+TNS   : -8.874
+
+Type  : Slow 1200mV 85C Model Setup 'debouncer:U11|debounced'
+Slack : 0.341
+TNS   : 0.000
+
+Type  : Slow 1200mV 85C Model Hold 'vga_controller:U2|column[0]'
+Slack : -0.611
+TNS   : -1.163
+
+Type  : Slow 1200mV 85C Model Hold 'hw_image_generator:U3|game_clk'
+Slack : 0.307
+TNS   : 0.000
+
+Type  : Slow 1200mV 85C Model Hold 'alienclock'
+Slack : 0.323
+TNS   : 0.000
+
+Type  : Slow 1200mV 85C Model Hold 'clkin'
+Slack : 0.325
+TNS   : 0.000
+
+Type  : Slow 1200mV 85C Model Hold 'debouncer:U11|debounced'
+Slack : 0.371
+TNS   : 0.000
+
+Type  : Slow 1200mV 85C Model Hold 'U1|altpll_component|auto_generated|pll1|clk[0]'
+Slack : 0.404
+TNS   : 0.000
+
+Type  : Slow 1200mV 85C Model Minimum Pulse Width 'hw_image_generator:U3|game_clk'
+Slack : -2.773
+TNS   : -968.200
+
+Type  : Slow 1200mV 85C Model Minimum Pulse Width 'alienclock'
+Slack : -1.222
+TNS   : -118.534
+
+Type  : Slow 1200mV 85C Model Minimum Pulse Width 'debouncer:U11|debounced'
+Slack : -1.222
+TNS   : -1.222
+
+Type  : Slow 1200mV 85C Model Minimum Pulse Width 'vga_controller:U2|column[0]'
+Slack : -0.676
+TNS   : -31.587
+
+Type  : Slow 1200mV 85C Model Minimum Pulse Width 'clkin'
+Slack : 9.643
+TNS   : 0.000
+
+Type  : Slow 1200mV 85C Model Minimum Pulse Width 'U1|altpll_component|auto_generated|pll1|clk[0]'
+Slack : 19.618
+TNS   : 0.000
+
+Type  : Slow 1200mV 0C Model Setup 'vga_controller:U2|column[0]'
+Slack : -29.231
+TNS   : -397.748
+
+Type  : Slow 1200mV 0C Model Setup 'hw_image_generator:U3|game_clk'
+Slack : -9.195
+TNS   : -4681.253
+
+Type  : Slow 1200mV 0C Model Setup 'U1|altpll_component|auto_generated|pll1|clk[0]'
+Slack : -7.525
+TNS   : -168.760
+
+Type  : Slow 1200mV 0C Model Setup 'clkin'
+Slack : -1.460
+TNS   : -21.028
+
+Type  : Slow 1200mV 0C Model Setup 'alienclock'
+Slack : -0.352
+TNS   : -5.047
+
+Type  : Slow 1200mV 0C Model Setup 'debouncer:U11|debounced'
+Slack : 0.398
+TNS   : 0.000
+
+Type  : Slow 1200mV 0C Model Hold 'vga_controller:U2|column[0]'
+Slack : -0.434
+TNS   : -0.843
+
+Type  : Slow 1200mV 0C Model Hold 'hw_image_generator:U3|game_clk'
+Slack : 0.278
+TNS   : 0.000
+
+Type  : Slow 1200mV 0C Model Hold 'alienclock'
+Slack : 0.293
+TNS   : 0.000
+
+Type  : Slow 1200mV 0C Model Hold 'clkin'
+Slack : 0.295
+TNS   : 0.000
+
+Type  : Slow 1200mV 0C Model Hold 'U1|altpll_component|auto_generated|pll1|clk[0]'
+Slack : 0.334
+TNS   : 0.000
+
+Type  : Slow 1200mV 0C Model Hold 'debouncer:U11|debounced'
+Slack : 0.338
+TNS   : 0.000
+
+Type  : Slow 1200mV 0C Model Minimum Pulse Width 'hw_image_generator:U3|game_clk'
+Slack : -2.773
+TNS   : -968.200
+
+Type  : Slow 1200mV 0C Model Minimum Pulse Width 'alienclock'
+Slack : -1.222
+TNS   : -118.534
+
+Type  : Slow 1200mV 0C Model Minimum Pulse Width 'debouncer:U11|debounced'
+Slack : -1.222
+TNS   : -1.222
+
+Type  : Slow 1200mV 0C Model Minimum Pulse Width 'vga_controller:U2|column[0]'
+Slack : -0.421
+TNS   : -24.136
+
+Type  : Slow 1200mV 0C Model Minimum Pulse Width 'clkin'
+Slack : 9.664
+TNS   : 0.000
+
+Type  : Slow 1200mV 0C Model Minimum Pulse Width 'U1|altpll_component|auto_generated|pll1|clk[0]'
+Slack : 19.575
+TNS   : 0.000
+
+Type  : Fast 1200mV 0C Model Setup 'vga_controller:U2|column[0]'
+Slack : -15.157
+TNS   : -207.021
+
+Type  : Fast 1200mV 0C Model Setup 'hw_image_generator:U3|game_clk'
+Slack : -4.542
+TNS   : -2168.723
+
+Type  : Fast 1200mV 0C Model Setup 'U1|altpll_component|auto_generated|pll1|clk[0]'
+Slack : -4.394
+TNS   : -96.990
+
+Type  : Fast 1200mV 0C Model Setup 'clkin'
+Slack : -0.648
+TNS   : -8.047
+
+Type  : Fast 1200mV 0C Model Setup 'alienclock'
+Slack : 0.255
+TNS   : 0.000
+
+Type  : Fast 1200mV 0C Model Setup 'debouncer:U11|debounced'
+Slack : 0.694
+TNS   : 0.000
+
+Type  : Fast 1200mV 0C Model Hold 'vga_controller:U2|column[0]'
+Slack : -0.581
+TNS   : -1.157
+
+Type  : Fast 1200mV 0C Model Hold 'hw_image_generator:U3|game_clk'
+Slack : 0.139
+TNS   : 0.000
+
+Type  : Fast 1200mV 0C Model Hold 'alienclock'
+Slack : 0.148
+TNS   : 0.000
+
+Type  : Fast 1200mV 0C Model Hold 'clkin'
+Slack : 0.149
+TNS   : 0.000
+
+Type  : Fast 1200mV 0C Model Hold 'debouncer:U11|debounced'
+Slack : 0.170
+TNS   : 0.000
+
+Type  : Fast 1200mV 0C Model Hold 'U1|altpll_component|auto_generated|pll1|clk[0]'
+Slack : 0.202
+TNS   : 0.000
+
+Type  : Fast 1200mV 0C Model Minimum Pulse Width 'hw_image_generator:U3|game_clk'
+Slack : -1.000
+TNS   : -739.000
+
+Type  : Fast 1200mV 0C Model Minimum Pulse Width 'alienclock'
+Slack : -1.000
+TNS   : -97.000
+
+Type  : Fast 1200mV 0C Model Minimum Pulse Width 'debouncer:U11|debounced'
+Slack : -1.000
+TNS   : -1.000
+
+Type  : Fast 1200mV 0C Model Minimum Pulse Width 'vga_controller:U2|column[0]'
+Slack : -0.292
+TNS   : -9.469
+
+Type  : Fast 1200mV 0C Model Minimum Pulse Width 'clkin'
+Slack : 9.458
+TNS   : 0.000
+
+Type  : Fast 1200mV 0C Model Minimum Pulse Width 'U1|altpll_component|auto_generated|pll1|clk[0]'
+Slack : 19.632
+TNS   : 0.000
+
+------------------------------------------------------------
